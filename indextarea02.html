@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Respuesta al Impulso - Grupo UACh</title>
-  <script src="https://unpkg.com/wavesurfer.js"></script>
+  <title>Proyecto Acústica UACh - Wavesurfer.js</title>
+  <!-- Font Awesome for control icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
   <style>
-    /* Estilos generales */
+    /* ===== Estilos generales ===== */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -17,8 +17,7 @@
       min-height: 100vh;
       flex-direction: column;
     }
-
-    /* Barra lateral */
+    /* ===== Barra lateral ===== */
     .sidebar {
       width: 200px;
       height: 100vh;
@@ -28,440 +27,182 @@
       position: fixed;
       overflow-y: auto;
     }
-
-    .sidebar-header {
-      text-align: center;
-      margin-bottom: 15px;
+    .sidebar-header { text-align: center; margin-bottom: 15px; }
+    .sidebar-logo { max-width: 100px; margin-bottom: 10px; }
+    .sidebar-title { font-size: 1.2rem; margin-bottom: 5px; color: #f0f0f0; }
+    .sidebar-subtitle { font-size: 0.8rem; color: #aaa; margin-bottom: 15px; }
+    .sidebar-divider { border-bottom: 1px solid rgba(255,255,255,0.2); margin-bottom: 15px; }
+    .nav-btn { display: block; width: 100%; padding: 12px; margin: 8px 0;
+      background: #282828; color: #f0f0f0; border: none; border-radius: 4px;
+      cursor: pointer; text-align: left; font-size: 15px; transition: all 0.3s;
     }
-
-    .sidebar-logo {
-      max-width: 100px;
-      margin-bottom: 10px;
-    }
-
-    .sidebar-title {
-      font-size: 1.2rem;
-      margin-bottom: 5px;
-      color: #f0f0f0;
-    }
-
-    .sidebar-subtitle {
-      font-size: 0.8rem;
-      color: #aaa;
-      margin-bottom: 15px;
-    }
-
-    .sidebar-divider {
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-      margin-bottom: 15px;
-    }
-
-    /* Botones de navegación */
-    .nav-btn {
-      display: block;
-      width: 100%;
-      padding: 12px;
-      margin: 8px 0;
-      background: #282828;
-      color: #f0f0f0;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      text-align: left;
-      font-size: 15px;
-      transition: all 0.3s;
-    }
-
-    .nav-btn:hover {
-      background: #2a2a2a;
-    }
-
-    .nav-btn.active {
-      background: #212121;
-      font-weight: bold;
-    }
-
-    /* Contenido principal */
+    .nav-btn:hover { background: #2a2a2a; }
+    .nav-btn.active { background: #212121; font-weight: bold; }
+    /* ===== Contenido principal ===== */
     .main-content {
       margin-left: 240px;
       padding: 20px 20px 30px 20px;
       width: calc(100% - 240px);
       flex: 1;
     }
-
-    /* Secciones de contenido */
-    .content-section {
-      display: none;
-      padding: 2rem;
-      margin: 1rem auto 3rem auto;
-      max-width: 900px;
-      background: #2a2a2a;
-      border-radius: 8px;
+    .content-section { display: none; padding: 2rem; margin: 1rem auto 3rem auto;
+      max-width: 900px; background: #2a2a2a; border-radius: 8px;
       box-shadow: 0 0 10px rgba(0,0,0,0.3);
     }
-
-    .content-section.active {
-      display: block;
-    }
-
-    h2 {
-      border-bottom: 2px solid #444;
-      padding-bottom: 0.5rem;
-      color: #f0f0f0;
-    }
-
-    h3, h4 {
-      color: #f0f0f0;
-    }
-
-    .audio-block {
-      margin: 1rem 0;
-    }
-
-    audio {
-      width: 100%;
-    }
-
-    ul {
-      color: #f0f0f0;
-    }
-
+    .content-section.active { display: block; }
+    h2 { border-bottom: 2px solid #444; padding-bottom: 0.5rem; }
+    ul { color: #f0f0f0; }
     footer {
-      text-align: center;
-      padding: 0.5rem;
-      color: #aaa;
-      font-size: 0.8rem;
-      width: calc(100% - 240px);
-      margin-left: 240px;
-      position: fixed;
-      bottom: 0;
-      background: transparent;
+      text-align: center; padding: 0.5rem; color: #aaa;
+      font-size: 0.8rem; width: calc(100% - 240px);
+      margin-left: 240px; position: fixed; bottom: 0;
     }
-
-    /* Player container styles */
-    .player-container {
-      margin: 20px 0;
-      padding: 15px;
-      background: #333;
-      border-radius: 5px;
+    /* ===== Player container ===== */
+    .player-container { margin: 20px 0; padding: 15px; background: #333; border-radius: 5px; }
+    .audio-info { display: flex; justify-content: space-between; margin-bottom: 10px; }
+    .audio-title { font-weight: bold; }
+    .audio-duration { color: #aaa; }
+    /* ===== Controles personalizados ===== */
+    .controls { display: flex; gap: 10px; align-items: center; margin-top: 10px; }
+    .controls button { background: #444; border: none; padding: 8px; border-radius: 4px;
+      cursor: pointer; color: #f0f0f0; font-size: 14px;
     }
-    
-    /* Audio group styles */
-    .audio-group {
-      margin-bottom: 30px;
-      border-bottom: 1px solid #444;
-      padding-bottom: 20px;
-    }
-    
-    .audio-group:last-child {
-      border-bottom: none;
-    }
-    
-    /* Audio info styles */
-    .audio-info {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
-    
-    .audio-title {
-      font-weight: bold;
-    }
-    
-    .audio-duration {
-      color: #aaa;
-    }
-
-    /* Estilos del reproductor mejorado */
-    .player-wrap {
-      width: 100%;
-      margin: 20px 0;
-    }
-
-    .audio-controls {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 15px;
-      margin-top: 15px;
-    }
-
-    .audio-controls button {
-      background: #444;
-      border: none;
-      color: white;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .audio-controls button:hover {
-      background: #555;
-    }
-
-    .audio-controls button i {
-      font-size: 16px;
-    }
-
-    .audio-controls .btn-toggle-pause .fa-pause,
-    .audio-controls .btn-toggle-mute .fa-volume-up {
-      display: none;
-    }
-
-    .audio-controls .btn-toggle-pause.playing .fa-play {
-      display: none;
-    }
-
-    .audio-controls .btn-toggle-pause.playing .fa-pause {
-      display: inline-block;
-    }
-
-    .audio-controls .btn-toggle-mute.muted .fa-volume-off {
-      display: none;
-    }
-
-    .audio-controls .btn-toggle-mute.muted .fa-volume-up {
-      display: inline-block;
-    }
-
-    /* Volume slider */
-    .volume-slider {
-      width: 100px;
-      margin: 0 10px;
-    }
+    .controls button:hover { background: #555; }
   </style>
 </head>
 <body>
-  <!-- Barra lateral -->
+  <!-- Sidebar -->
   <div class="sidebar">
     <div class="sidebar-header">
-      <img src="imagenes/logo-au.png" alt="Logo" class="sidebar-logo">
-      <div class="sidebar-title">Tarea 02</div>
+      <img src="imagenes/logo-au.png" alt="Logo UACh" class="sidebar-logo">
+      <div class="sidebar-title">Tarea 02 - UACh</div>
       <div class="sidebar-subtitle">ACUS099</div>
     </div>
     <div class="sidebar-divider"></div>
     <button class="nav-btn active" onclick="showSection('inicio')">🏠 Inicio</button>
-    <button class="nav-btn" onclick="showSection('integrantes')">👥 Integrantes</button>
-    <button class="nav-btn" onclick="showSection('equipamiento')">🛠️ Equipamiento</button>
-    <button class="nav-btn" onclick="showSection('recintos')">📍 Recintos Medidos</button>
     <button class="nav-btn" onclick="showSection('grabaciones')">🎙️ Grabaciones Secas</button>
     <button class="nav-btn" onclick="showSection('impulsos')">🔊 Respuestas al Impulso</button>
     <button class="nav-btn" onclick="showSection('convolucion')">🔁 Audios Convolucionados</button>
     <button class="nav-btn" onclick="showSection('galeria')">📸 Galería</button>
   </div>
 
-  <!-- Contenido principal -->
+  <!-- Main Content -->
   <div class="main-content">
-    <!-- Sección Inicio -->
     <section id="inicio" class="content-section active">
-      <header>
-        <h1>Captura y Procesamiento de Respuesta al Impulso</h1>
-        <p>Proyecto Acústica UACh - Grupo X</p>
-      </header>
-      <p>Bienvenido al informe del proyecto de medición acústica.</p>
+      <h1>Proyecto de Medición Acústica UACh</h1>
+      <p>Bienvenido al informe interactivo.</p>
     </section>
 
-    <!-- Sección Integrantes -->
-    <section id="integrantes" class="content-section">
-      <h2>👥 Integrantes del Grupo</h2>
-      <ul>
-        <li>Nombre 1</li>
-        <li>Nombre 2</li>
-        <li>Nombre 3</li>
-      </ul>
-    </section>
-
-    <!-- Sección Equipamiento -->
-    <section id="equipamiento" class="content-section">
-      <h2>🛠️ Equipamiento Utilizado</h2>
-      <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-around;">
-
-        <div style="flex: 1 1 200px; text-align: center;">
-          <img src="imagenes/Behringer-ECM8000-Microfono-de-Condensador-para-Medicion-Set-Planet-Music-1200x1200-1.png" alt="Micrófono" style="width: 100%; max-width: 200px; border-radius: 8px;">
-          <p>Micrófono: Behringer-ECM8000</p>
-        </div>
-
-        <div style="flex: 1 1 200px; text-align: center;">
-          <img src="imagenes/s-l400.png" alt="Fuente sonora" style="width: 100%; max-width: 200px; border-radius: 8px;">
-          <p>Fuente sonora: Wood clapper</p>
-        </div>
-
-        <div style="flex: 1 1 200px; text-align: center;">
-          <img src="imagenes/23544.png" alt="Grabadora o interfaz" style="width: 100%; max-width: 200px; border-radius: 8px;">
-          <p>Grabadora/Interface: KOMPLETE Audio 1</p>
-        </div>
-
-        <div style="flex: 1 1 200px; text-align: center;">
-          <img src="imagenes/s23_hero_sp23-dlab-ableton.png" alt="Software" style="width: 100%; max-width: 200px; border-radius: 8px;">
-          <p>Software: Ableton Live 12 Suite</p>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Sección Recintos -->
-    <section id="recintos" class="content-section">
-      <h2>📍 Recintos Medidos</h2>
-      <h3>1. Cámara Reverberante Acústica UACh</h3>
-      <h3>2. Edificio 14K</h3>
-      <h3>3. Edificio 6K pasillos</h3>
-      
-      <p>Descripción breve del recinto...</p>
-    </section>
-
-    <!-- Sección Grabaciones Secas -->
     <section id="grabaciones" class="content-section">
       <h2>🎙️ Grabaciones Secas</h2>
-      <p>Grabaciones de voz e instrumento sin reverberación.</p>
-      
-      <div class="audio-group">
-        <h3>Voz</h3>
-        <div class="player-wrap">
-          <div id="voz-seca-wave"></div>
-          <div class="audio-controls">
-            <button type="button" class="btn-backward">
-              <i class="fa fa-step-backward"></i>
-            </button>
-            <button type="button" class="btn-toggle-pause">
-              <i class="fa fa-play"></i> <i class="fa fa-pause"></i>
-            </button>
-            <button type="button" class="btn-forward">
-              <i class="fa fa-step-forward"></i>
-            </button>
-            <button type="button" class="btn-toggle-mute">
-              <i class="fa fa-volume-off"></i> <i class="fa fa-volume-up"></i>
-            </button>
-            <button type="button" class="btn-stop">
-              <i class="fa fa-stop"></i>
-            </button>
-            <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1">
-          </div>
-        </div>
-      </div>
-      
-      <div class="audio-group">
-        <h3>Instrumento</h3>
-        <div class="player-wrap">
-          <div id="instrumento-seco-wave"></div>
-          <div class="audio-controls">
-            <button type="button" class="btn-backward">
-              <i class="fa fa-step-backward"></i>
-            </button>
-            <button type="button" class="btn-toggle-pause">
-              <i class="fa fa-play"></i> <i class="fa fa-pause"></i>
-            </button>
-            <button type="button" class="btn-forward">
-              <i class="fa fa-step-forward"></i>
-            </button>
-            <button type="button" class="btn-toggle-mute">
-              <i class="fa fa-volume-off"></i> <i class="fa fa-volume-up"></i>
-            </button>
-            <button type="button" class="btn-stop">
-              <i class="fa fa-stop"></i>
-            </button>
-            <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1">
-          </div>
-        </div>
-      </div>
+      <div class="player-container" id="voz-seca"></div>
+      <div class="player-container" id="instrumento-seco"></div>
     </section>
 
-    <!-- Sección Respuestas al Impulso -->
     <section id="impulsos" class="content-section">
       <h2>🔊 Respuestas al Impulso</h2>
-      <p>Respuestas al impulso medidas en los diferentes recintos.</p>
-      
-      <div class="audio-group">
-        <h3>1. Cámara Reverberante</h3>
-        <div class="player-wrap">
-          <div id="impulso-camara-wave"></div>
-          <div class="audio-controls">
-            <button type="button" class="btn-backward">
-              <i class="fa fa-step-backward"></i>
-            </button>
-            <button type="button" class="btn-toggle-pause">
-              <i class="fa fa-play"></i> <i class="fa fa-pause"></i>
-            </button>
-            <button type="button" class="btn-forward">
-              <i class="fa fa-step-forward"></i>
-            </button>
-            <button type="button" class="btn-toggle-mute">
-              <i class="fa fa-volume-off"></i> <i class="fa fa-volume-up"></i>
-            </button>
-            <button type="button" class="btn-stop">
-              <i class="fa fa-stop"></i>
-            </button>
-            <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1">
-          </div>
-        </div>
-      </div>
-      
-      <div class="audio-group">
-        <h3>2. Edificio 14K</h3>
-        <div class="player-wrap">
-          <div id="impulso-14k-wave"></div>
-          <div class="audio-controls">
-            <button type="button" class="btn-backward">
-              <i class="fa fa-step-backward"></i>
-            </button>
-            <button type="button" class="btn-toggle-pause">
-              <i class="fa fa-play"></i> <i class="fa fa-pause"></i>
-            </button>
-            <button type="button" class="btn-forward">
-              <i class="fa fa-step-forward"></i>
-            </button>
-            <button type="button" class="btn-toggle-mute">
-              <i class="fa fa-volume-off"></i> <i class="fa fa-volume-up"></i>
-            </button>
-            <button type="button" class="btn-stop">
-              <i class="fa fa-stop"></i>
-            </button>
-            <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1">
-          </div>
-        </div>
-      </div>
-      
-      <div class="audio-group">
-        <h3>3. Edificio 6K Pasillos</h3>
-        <div class="player-wrap">
-          <div id="impulso-6k-wave"></div>
-          <div class="audio-controls">
-            <button type="button" class="btn-backward">
-              <i class="fa fa-step-backward"></i>
-            </button>
-            <button type="button" class="btn-toggle-pause">
-              <i class="fa fa-play"></i> <i class="fa fa-pause"></i>
-            </button>
-            <button type="button" class="btn-forward">
-              <i class="fa fa-step-forward"></i>
-            </button>
-            <button type="button" class="btn-toggle-mute">
-              <i class="fa fa-volume-off"></i> <i class="fa fa-volume-up"></i>
-            </button>
-            <button type="button" class="btn-stop">
-              <i class="fa fa-stop"></i>
-            </button>
-            <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1">
-          </div>
-        </div>
-      </div>
+      <div class="player-container" id="impulso-camara"></div>
+      <div class="player-container" id="impulso-14k"></div>
+      <div class="player-container" id="impulso-6k"></div>
     </section>
 
-    <!-- Sección Audios Convolucionados -->
     <section id="convolucion" class="content-section">
       <h2>🔁 Audios Convolucionados</h2>
-      <p>Resultados de aplicar convolución con las respuestas al impulso a las grabaciones secas.</p>
-      
-      <div class="audio-group">
-        <h3>Voz en Cámara Reverberante</h3>
-        <div class="player-wrap">
-          <div id="resultado_convolucionreverb_03_poem"></div>
-          <div class="audio-controls">
-            <button type="button" class="btn-backward">
-              <i class="fa fa-step-backward"></i>
-            </button>
-            <button
+      <div class="player-container" id="voz-camara"></div>
+      <div class="player-container" id="voz-14k"></div>
+      <div class="player-container" id="voz-6k"></div>
+      <div class="player-container" id="instrumento-camara"></div>
+      <div class="player-container" id="instrumento-14k"></div>
+      <div class="player-container" id="instrumento-6k"></div>
+    </section>
+
+    <section id="galeria" class="content-section">
+      <h2>📸 Galería Fotográfica</h2>
+      <p>Próximamente...</p>
+    </section>
+  </div>
+
+  <footer>
+    UACh - Escuela de Acústica | ISO 3382
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/wavesurfer.js"></script>
+  <script>
+    // Navegación de secciones
+    function showSection(id) {
+      document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    // Crear reproductor con controles avanzados
+    function createAudioPlayer(containerId, src, title) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      container.innerHTML = '';
+
+      // Info
+      const info = document.createElement('div'); info.className = 'audio-info';
+      const t = document.createElement('div'); t.className = 'audio-title'; t.textContent = title;
+      const d = document.createElement('div'); d.className = 'audio-duration'; d.textContent = '00:00 / 00:00';
+      info.append(t, d); container.append(info);
+
+      // Wavesurfer
+      const ws = WaveSurfer.create({
+        container: `#${containerId}`,
+        waveColor: '#4a4a4a', progressColor: '#2b91af', cursorColor: '#fff',
+        barWidth: 2, barRadius: 3, cursorWidth: 1, height: 80, barGap: 2, responsive: true
+      });
+      ws.load(src);
+
+      // Controls wrapper
+      const ctrls = document.createElement('div'); ctrls.className = 'controls';
+
+      // Buttons
+      const btns = [
+        { icon: 'fa-step-backward', fn: () => ws.skip(-5) },
+        { icon: 'fa-play', fn: () => ws.playPause() },
+        { icon: 'fa-step-forward', fn: () => ws.skip(5) },
+        { icon: 'fa-volume-off', fn: () => ws.toggleMute() },
+        { icon: 'fa-stop', fn: () => { ws.stop(); ws.seekTo(0);} }
+      ];
+      btns.forEach(b => {
+        const btn = document.createElement('button');
+        btn.innerHTML = `<i class="fa ${b.icon}"></i>`;
+        btn.onclick = b.fn;
+        ctrls.append(btn);
+      });
+      container.append(ctrls);
+
+      // Update timer
+      ws.on('audioprocess', () => {
+        const cur = Math.floor(ws.getCurrentTime());
+        const dur = Math.floor(ws.getDuration());
+        d.textContent = `${String(Math.floor(cur/60)).padStart(2,'0')}:${String(cur%60).padStart(2,'0')} / ${String(Math.floor(dur/60)).padStart(2,'0')}:${String(dur%60).padStart(2,'0')}`;
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Secas
+      createAudioPlayer('voz-seca', 'audios/secos/an_03_poem.wav', 'Voz seca');
+      createAudioPlayer('instrumento-seco', 'audios/an_01_bot.wav', 'Instrumento seco');
+      // Impulsos
+      createAudioPlayer('impulso-camara', 'audios/ri-camara.wav', 'RI Cámara');
+      createAudioPlayer('impulso-14k', 'audios/ri-14k.wav', 'RI Edif. 14K');
+      createAudioPlayer('impulso-6k', 'audios/ri-6k.wav', 'RI Pasillos');
+      // Convolucionados
+      const convs = [
+        ['voz-camara','audios/voz-conv-camara.wav','Voz Conv Cam.'],
+        ['voz-14k','audios/voz-conv-14k.wav','Voz Conv 14K'],
+        ['voz-6k','audios/voz-conv-6k.wav','Voz Conv Pas.'],
+        ['instrumento-camara','audios/instrumento-conv-camara.wav','Inst Conv Cam.'],
+        ['instrumento-14k','audios/instrumento-conv-14k.wav','Inst Conv 14K'],
+        ['instrumento-6k','audios/instrumento-conv-6k.wav','Inst Conv Pas.']
+      ];
+      convs.forEach(c => createAudioPlayer(c[0], c[1], c[2]));
+    });
+  </script>
+</body>
+</html>
