@@ -139,128 +139,36 @@
 
     /* Player container styles */
     .player-container {
-      margin: 15px 0;
+      margin: 20px 0;
       padding: 15px;
-      background: #3a3a3a;
+      background: #333;
       border-radius: 5px;
     }
-
-    /* Estilos para las secciones de audio */
-    .audio-section {
-      background: #333;
-      padding: 1.5rem;
-      border-radius: 8px;
-      margin-bottom: 2rem;
-    }
-
+    
+    /* Audio group styles */
     .audio-group {
-      margin-bottom: 2rem;
-      padding-bottom: 1.5rem;
+      margin-bottom: 30px;
       border-bottom: 1px solid #444;
+      padding-bottom: 20px;
     }
-
+    
     .audio-group:last-child {
       border-bottom: none;
-      margin-bottom: 0;
-      padding-bottom: 0;
     }
-
-    .audio-description {
-      color: #aaa;
-      font-size: 0.9rem;
-      margin-top: 0.5rem;
-    }
-
-    /* Estilos para los controles del reproductor */
-    .wave-controls {
+    
+    /* Audio info styles */
+    .audio-info {
       display: flex;
-      gap: 10px;
-      margin-top: 10px;
-      align-items: center;
-      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-bottom: 10px;
     }
-
-    .wave-controls button {
-      background: #2b91af;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .wave-controls button:hover {
-      background: #247b94;
-    }
-
-    .wave-time {
-      min-width: 100px;
-    }
-
-    .wave-volume {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    /* Estilos para las pestañas */
-    .tab-container {
-      display: flex;
-      margin-bottom: 15px;
-      border-bottom: 1px solid #444;
-    }
-
-    .tab {
-      padding: 10px 20px;
-      cursor: pointer;
-      background: #3a3a3a;
-      border: none;
-      color: #f0f0f0;
-      border-radius: 5px 5px 0 0;
-      margin-right: 5px;
-    }
-
-    .tab.active {
-      background: #2b91af;
+    
+    .audio-title {
       font-weight: bold;
     }
     
-    /* Loading indicator */
-    .loading {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(255,255,255,0.3);
-      border-radius: 50%;
-      border-top-color: #2b91af;
-      animation: spin 1s ease-in-out infinite;
-    }
-    
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    
-    .loading-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    /* Error message */
-    .error-message {
-      color: #ff6b6b;
-      font-size: 0.9rem;
-      margin-top: 5px;
-    }
-    
-    /* Waveform container */
-    .waveform {
-      width: 100%;
-      height: 120px;
-      background: #2a2a2a;
-      border-radius: 4px;
-      margin-bottom: 10px;
-      overflow: hidden;
+    .audio-duration {
+      color: #aaa;
     }
   </style>
 </head>
@@ -273,20 +181,20 @@
       <div class="sidebar-subtitle">ACUS099</div>
     </div>
     <div class="sidebar-divider"></div>
-    <button class="nav-btn" onclick="showSection('inicio')">🏠 Inicio</button>
+    <button class="nav-btn active" onclick="showSection('inicio')">🏠 Inicio</button>
     <button class="nav-btn" onclick="showSection('integrantes')">👥 Integrantes</button>
     <button class="nav-btn" onclick="showSection('equipamiento')">🛠️ Equipamiento</button>
     <button class="nav-btn" onclick="showSection('recintos')">📍 Recintos Medidos</button>
-    <button class="nav-btn" onclick="showSection('grabaciones')">🎙️ Grabaciones</button>
-    <button class="nav-btn" onclick="showSection('convolucion')">🔁 Convolución</button>
+    <button class="nav-btn" onclick="showSection('grabaciones')">🎙️ Grabaciones Secas</button>
+    <button class="nav-btn" onclick="showSection('impulsos')">🔊 Respuestas al Impulso</button>
+    <button class="nav-btn" onclick="showSection('convolucion')">🔁 Audios Convolucionados</button>
     <button class="nav-btn" onclick="showSection('galeria')">📸 Galería</button>
-    <button class="nav-btn active" onclick="showSection('audioPlayers')">🎵 Audio Players</button>
   </div>
 
   <!-- Contenido principal -->
   <div class="main-content">
     <!-- Sección Inicio -->
-    <section id="inicio" class="content-section">
+    <section id="inicio" class="content-section active">
       <header>
         <h1>Captura y Procesamiento de Respuesta al Impulso</h1>
         <p>Proyecto Acústica UACh - Grupo X</p>
@@ -308,22 +216,27 @@
     <section id="equipamiento" class="content-section">
       <h2>🛠️ Equipamiento Utilizado</h2>
       <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-around;">
+
         <div style="flex: 1 1 200px; text-align: center;">
           <img src="imagenes/Behringer-ECM8000-Microfono-de-Condensador-para-Medicion-Set-Planet-Music-1200x1200-1.png" alt="Micrófono" style="width: 100%; max-width: 200px; border-radius: 8px;">
           <p>Micrófono: Behringer-ECM8000</p>
         </div>
+
         <div style="flex: 1 1 200px; text-align: center;">
           <img src="imagenes/s-l400.png" alt="Fuente sonora" style="width: 100%; max-width: 200px; border-radius: 8px;">
           <p>Fuente sonora: Wood clapper</p>
         </div>
+
         <div style="flex: 1 1 200px; text-align: center;">
           <img src="imagenes/23544.png" alt="Grabadora o interfaz" style="width: 100%; max-width: 200px; border-radius: 8px;">
           <p>Grabadora/Interface: KOMPLETE Audio 1</p>
         </div>
+
         <div style="flex: 1 1 200px; text-align: center;">
           <img src="imagenes/s23_hero_sp23-dlab-ableton.png" alt="Software" style="width: 100%; max-width: 200px; border-radius: 8px;">
           <p>Software: Ableton Live 12 Suite</p>
         </div>
+
       </div>
     </section>
 
@@ -335,264 +248,85 @@
       <h3>3. Edificio 6K pasillos</h3>
       
       <p>Descripción breve del recinto...</p>
-      <div class="audio-block">
-        <p>🎧 Respuesta al Impulso:</p>
-        <audio controls src="audios/ri-camara.wav"></audio>
+    </section>
+
+    <!-- Sección Grabaciones Secas -->
+    <section id="grabaciones" class="content-section">
+      <h2>🎙️ Grabaciones Secas</h2>
+      <p>Grabaciones de voz e instrumento sin reverberación.</p>
+      
+      <div class="audio-group">
+        <h3>Voz</h3>
+        <div id="voz-seca" class="player-container"></div>
+      </div>
+      
+      <div class="audio-group">
+        <h3>Instrumento</h3>
+        <div id="instrumento-seco" class="player-container"></div>
       </div>
     </section>
 
-    <!-- Sección Grabaciones -->
-    <section id="grabaciones" class="content-section">
-      <h2>🎙️ Grabaciones en Cámara Anecoica</h2>
-      <p>Grabaciones de voz e instrumento sin reverberación.</p>
-      <h4>Voz</h4>
-      <audio controls src="audios/voz-seca.wav"></audio>
-      <h4>Instrumento</h4>
-      <audio controls src="audios/instrumento-seco.wav"></audio>
+    <!-- Sección Respuestas al Impulso -->
+    <section id="impulsos" class="content-section">
+      <h2>🔊 Respuestas al Impulso</h2>
+      <p>Respuestas al impulso medidas en los diferentes recintos.</p>
+      
+      <div class="audio-group">
+        <h3>1. Cámara Reverberante</h3>
+        <div id="impulso-camara" class="player-container"></div>
+      </div>
+      
+      <div class="audio-group">
+        <h3>2. Edificio 14K</h3>
+        <div id="impulso-14k" class="player-container"></div>
+      </div>
+      
+      <div class="audio-group">
+        <h3>3. Edificio 6K Pasillos</h3>
+        <div id="impulso-6k" class="player-container"></div>
+      </div>
     </section>
 
-    <!-- Sección Convolución -->
+    <!-- Sección Audios Convolucionados -->
     <section id="convolucion" class="content-section">
-      <h2>🔁 Convolución con Respuestas al Impulso</h2>
-      <p>Aplicación de convolución para simular los recintos.</p>
-      <h4>Voz en Cámara Reverberante</h4>
-      <audio controls src="audios/voz-conv-camara.wav"></audio>
-      <h4>Instrumento en Recinto 2</h4>
-      <audio controls src="audios/instrumento-conv-recinto2.wav"></audio>
+      <h2>🔁 Audios Convolucionados</h2>
+      <p>Resultados de aplicar convolución con las respuestas al impulso a las grabaciones secas.</p>
+      
+      <div class="audio-group">
+        <h3>Voz en Cámara Reverberante</h3>
+        <div id="voz-camara" class="player-container"></div>
+      </div>
+      
+      <div class="audio-group">
+        <h3>Voz en Edificio 14K</h3>
+        <div id="voz-14k" class="player-container"></div>
+      </div>
+      
+      <div class="audio-group">
+        <h3>Voz en Edificio 6K Pasillos</h3>
+        <div id="voz-6k" class="player-container"></div>
+      </div>
+      
+      <div class="audio-group">
+        <h3>Instrumento en Cámara Reverberante</h3>
+        <div id="instrumento-camara" class="player-container"></div>
+      </div>
+      
+      <div class="audio-group">
+        <h3>Instrumento en Edificio 14K</h3>
+        <div id="instrumento-14k" class="player-container"></div>
+      </div>
+      
+      <div class="audio-group">
+        <h3>Instrumento en Edificio 6K Pasillos</h3>
+        <div id="instrumento-6k" class="player-container"></div>
+      </div>
     </section>
 
     <!-- Sección Galería -->
     <section id="galeria" class="content-section">
       <h2>📸 Galería Fotográfica</h2>
       <p>Aquí irían las fotos del proyecto cuando estén disponibles.</p>
-    </section>
-
-    <!-- Sección Audio Players -->
-    <section id="audioPlayers" class="content-section active">
-      <h2>🎵 Reproductor de Audios</h2>
-      
-      <!-- Pestañas para navegar entre secciones de audio -->
-      <div class="tab-container">
-        <button class="tab active" onclick="showAudioTab('impulse')">Impulsos</button>
-        <button class="tab" onclick="showAudioTab('dry')">Audios Secos</button>
-        <button class="tab" onclick="showAudioTab('convolved')">Convolucionados</button>
-      </div>
-      
-      <!-- Sección de Respuestas al Impulso -->
-      <div id="impulse-section" class="audio-section">
-        <h3>🔊 Respuestas al Impulso Originales</h3>
-        <p>Estas son las grabaciones originales de los impulsos en cada recinto.</p>
-        
-        <div class="audio-group">
-          <h4>1. Cámara Reverberante</h4>
-          <div id="impulse1" class="player-container">
-            <div class="waveform" id="waveform-impulse1"></div>
-            <div class="wave-controls">
-              <button id="play-impulse1">Play</button>
-              <button id="mute-impulse1">Mute</button>
-              <div id="time-impulse1" class="wave-time">0:00 / 0:00</div>
-              <div class="wave-volume">
-                <span>Vol:</span>
-                <input type="range" id="volume-impulse1" min="0" max="1" step="0.01" value="1">
-              </div>
-              <div id="loading-impulse1" class="loading-container" style="display:none;">
-                <div class="loading"></div>
-                <span>Cargando...</span>
-              </div>
-              <div id="error-impulse1" class="error-message" style="display:none;"></div>
-            </div>
-          </div>
-          <p class="audio-description">Grabado en la cámara reverberante de la UACh con wood clapper.</p>
-        </div>
-        
-        <div class="audio-group">
-          <h4>2. Edificio 14K</h4>
-          <div id="impulse2" class="player-container">
-            <div class="waveform" id="waveform-impulse2"></div>
-            <div class="wave-controls">
-              <button id="play-impulse2">Play</button>
-              <button id="mute-impulse2">Mute</button>
-              <div id="time-impulse2" class="wave-time">0:00 / 0:00</div>
-              <div class="wave-volume">
-                <span>Vol:</span>
-                <input type="range" id="volume-impulse2" min="0" max="1" step="0.01" value="1">
-              </div>
-              <div id="loading-impulse2" class="loading-container" style="display:none;">
-                <div class="loading"></div>
-                <span>Cargando...</span>
-              </div>
-              <div id="error-impulse2" class="error-message" style="display:none;"></div>
-            </div>
-          </div>
-          <p class="audio-description">Respuesta al impulso grabada en el edificio 14K.</p>
-        </div>
-        
-        <div class="audio-group">
-          <h4>3. Edificio 6K Pasillos</h4>
-          <div id="impulse3" class="player-container">
-            <div class="waveform" id="waveform-impulse3"></div>
-            <div class="wave-controls">
-              <button id="play-impulse3">Play</button>
-              <button id="mute-impulse3">Mute</button>
-              <div id="time-impulse3" class="wave-time">0:00 / 0:00</div>
-              <div class="wave-volume">
-                <span>Vol:</span>
-                <input type="range" id="volume-impulse3" min="0" max="1" step="0.01" value="1">
-              </div>
-              <div id="loading-impulse3" class="loading-container" style="display:none;">
-                <div class="loading"></div>
-                <span>Cargando...</span>
-              </div>
-              <div id="error-impulse3" class="error-message" style="display:none;"></div>
-            </div>
-          </div>
-          <p class="audio-description">Respuesta al impulso en los pasillos del edificio 6K.</p>
-        </div>
-      </div>
-      
-      <!-- Sección de Audios Secos -->
-      <div id="dry-section" class="audio-section" style="display:none;">
-        <h3>🎤 Audios Secos (Sin reverberación)</h3>
-        <p>Grabaciones originales de voz e instrumento sin procesar.</p>
-        
-        <div class="audio-group">
-          <h4>Voz Seca</h4>
-          <div id="dry-voice" class="player-container">
-            <div class="waveform" id="waveform-dry-voice"></div>
-            <div class="wave-controls">
-              <button id="play-dry-voice">Play</button>
-              <button id="mute-dry-voice">Mute</button>
-              <div id="time-dry-voice" class="wave-time">0:00 / 0:00</div>
-              <div class="wave-volume">
-                <span>Vol:</span>
-                <input type="range" id="volume-dry-voice" min="0" max="1" step="0.01" value="1">
-              </div>
-              <div id="loading-dry-voice" class="loading-container" style="display:none;">
-                <div class="loading"></div>
-                <span>Cargando...</span>
-              </div>
-              <div id="error-dry-voice" class="error-message" style="display:none;"></div>
-            </div>
-          </div>
-          <p class="audio-description">Grabación de voz en cámara anecoica sin procesar.</p>
-        </div>
-        
-        <div class="audio-group">
-          <h4>Instrumento Seco 1</h4>
-          <div id="dry-instrument1" class="player-container">
-            <div class="waveform" id="waveform-dry-instrument1"></div>
-            <div class="wave-controls">
-              <button id="play-dry-instrument1">Play</button>
-              <button id="mute-dry-instrument1">Mute</button>
-              <div id="time-dry-instrument1" class="wave-time">0:00 / 0:00</div>
-              <div class="wave-volume">
-                <span>Vol:</span>
-                <input type="range" id="volume-dry-instrument1" min="0" max="1" step="0.01" value="1">
-              </div>
-              <div id="loading-dry-instrument1" class="loading-container" style="display:none;">
-                <div class="loading"></div>
-                <span>Cargando...</span>
-              </div>
-              <div id="error-dry-instrument1" class="error-message" style="display:none;"></div>
-            </div>
-          </div>
-          <p class="audio-description">Primera grabación de instrumento en cámara anecoica.</p>
-        </div>
-        
-        <div class="audio-group">
-          <h4>Instrumento Seco 2</h4>
-          <div id="dry-instrument2" class="player-container">
-            <div class="waveform" id="waveform-dry-instrument2"></div>
-            <div class="wave-controls">
-              <button id="play-dry-instrument2">Play</button>
-              <button id="mute-dry-instrument2">Mute</button>
-              <div id="time-dry-instrument2" class="wave-time">0:00 / 0:00</div>
-              <div class="wave-volume">
-                <span>Vol:</span>
-                <input type="range" id="volume-dry-instrument2" min="0" max="1" step="0.01" value="1">
-              </div>
-              <div id="loading-dry-instrument2" class="loading-container" style="display:none;">
-                <div class="loading"></div>
-                <span>Cargando...</span>
-              </div>
-              <div id="error-dry-instrument2" class="error-message" style="display:none;"></div>
-            </div>
-          </div>
-          <p class="audio-description">Segunda grabación de instrumento en cámara anecoica.</p>
-        </div>
-      </div>
-      
-      <!-- Sección de Audios Convolucionados -->
-      <div id="convolved-section" class="audio-section" style="display:none;">
-        <h3>🎚️ Audios Convolucionados</h3>
-        <p>Resultados de aplicar convolución a señales secas con los impulsos.</p>
-        
-        <div class="audio-group">
-          <h4>Voz en Cámara Reverberante</h4>
-          <div id="convolved-voice-camara" class="player-container">
-            <div class="waveform" id="waveform-convolved-voice-camara"></div>
-            <div class="wave-controls">
-              <button id="play-convolved-voice-camara">Play</button>
-              <button id="mute-convolved-voice-camara">Mute</button>
-              <div id="time-convolved-voice-camara" class="wave-time">0:00 / 0:00</div>
-              <div class="wave-volume">
-                <span>Vol:</span>
-                <input type="range" id="volume-convolved-voice-camara" min="0" max="1" step="0.01" value="1">
-              </div>
-              <div id="loading-convolved-voice-camara" class="loading-container" style="display:none;">
-                <div class="loading"></div>
-                <span>Cargando...</span>
-              </div>
-              <div id="error-convolved-voice-camara" class="error-message" style="display:none;"></div>
-            </div>
-          </div>
-          <p class="audio-description">Voz seca procesada con el impulso de la cámara reverberante.</p>
-        </div>
-        
-        <div class="audio-group">
-          <h4>Instrumento 1 en Edificio 14K</h4>
-          <div id="convolved-instrument1-14k" class="player-container">
-            <div class="waveform" id="waveform-convolved-instrument1-14k"></div>
-            <div class="wave-controls">
-              <button id="play-convolved-instrument1-14k">Play</button>
-              <button id="mute-convolved-instrument1-14k">Mute</button>
-              <div id="time-convolved-instrument1-14k" class="wave-time">0:00 / 0:00</div>
-              <div class="wave-volume">
-                <span>Vol:</span>
-                <input type="range" id="volume-convolved-instrument1-14k" min="0" max="1" step="0.01" value="1">
-              </div>
-              <div id="loading-convolved-instrument1-14k" class="loading-container" style="display:none;">
-                <div class="loading"></div>
-                <span>Cargando...</span>
-              </div>
-              <div id="error-convolved-instrument1-14k" class="error-message" style="display:none;"></div>
-            </div>
-          </div>
-          <p class="audio-description">Primer instrumento procesado con el impulso del edificio 14K.</p>
-        </div>
-        
-        <div class="audio-group">
-          <h4>Instrumento 2 en Edificio 6K Pasillos</h4>
-          <div id="convolved-instrument2-6k" class="player-container">
-            <div class="waveform" id="waveform-convolved-instrument2-6k"></div>
-            <div class="wave-controls">
-              <button id="play-convolved-instrument2-6k">Play</button>
-              <button id="mute-convolved-instrument2-6k">Mute</button>
-              <div id="time-convolved-instrument2-6k" class="wave-time">0:00 / 0:00</div>
-              <div class="wave-volume">
-                <span>Vol:</span>
-                <input type="range" id="volume-convolved-instrument2-6k" min="0" max="1" step="0.01" value="1">
-              </div>
-              <div id="loading-convolved-instrument2-6k" class="loading-container" style="display:none;">
-                <div class="loading"></div>
-                <span>Cargando...</span>
-              </div>
-              <div id="error-convolved-instrument2-6k" class="error-message" style="display:none;"></div>
-            </div>
-          </div>
-          <p class="audio-description">Segundo instrumento procesado con el impulso de los pasillos del 6K.</p>
-        </div>
-      </div>
     </section>
   </div>
 
@@ -601,10 +335,6 @@
   </footer>
 
   <script>
-    // Objeto para almacenar todas las instancias de WaveSurfer
-    const wavesurfers = {};
-    
-    // Función para cambiar entre secciones principales
     function showSection(sectionId) {
       // Oculta todas las secciones
       document.querySelectorAll('.content-section').forEach(section => {
@@ -621,42 +351,32 @@
       event.target.classList.add('active');
     }
     
-    // Función para cambiar entre pestañas de audio
-    function showAudioTab(tabId) {
-      // Oculta todas las secciones de audio
-      document.getElementById('impulse-section').style.display = 'none';
-      document.getElementById('dry-section').style.display = 'none';
-      document.getElementById('convolved-section').style.display = 'none';
+    function createAudioPlayer(containerId, audioSrc, title) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
       
-      // Muestra la sección seleccionada
-      document.getElementById(tabId + '-section').style.display = 'block';
+      // Limpiar el contenedor si ya tiene contenido
+      container.innerHTML = '';
       
-      // Actualiza las pestañas activas
-      document.querySelectorAll('.tab').forEach(tab => {
-        tab.classList.remove('active');
-      });
-      event.target.classList.add('active');
-    }
-    
-    // Función para formatear el tiempo como MM:SS
-    function formatTime(seconds) {
-      const minutes = Math.floor(seconds / 60);
-      const secs = Math.floor(seconds % 60);
-      return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
-    }
-    
-    // Función para crear un reproductor de audio con WaveSurfer
-    function createAudioPlayer(playerId, audioSrc) {
-      // Mostrar indicador de carga
-      const loadingElement = document.getElementById(`loading-${playerId}`);
-      const errorElement = document.getElementById(`error-${playerId}`);
+      // Crear elemento de información del audio
+      const audioInfo = document.createElement('div');
+      audioInfo.className = 'audio-info';
       
-      if (loadingElement) loadingElement.style.display = 'flex';
-      if (errorElement) errorElement.style.display = 'none';
+      const audioTitle = document.createElement('div');
+      audioTitle.className = 'audio-title';
+      audioTitle.textContent = title || 'Audio';
       
-      // Crear instancia de WaveSurfer
-      wavesurfers[playerId] = WaveSurfer.create({
-        container: `#waveform-${playerId}`,
+      const audioDuration = document.createElement('div');
+      audioDuration.className = 'audio-duration';
+      audioDuration.textContent = '0:00 / 0:00';
+      
+      audioInfo.appendChild(audioTitle);
+      audioInfo.appendChild(audioDuration);
+      container.appendChild(audioInfo);
+      
+      // Crear el visualizador de onda
+      const wavesurfer = WaveSurfer.create({
+        container: `#${containerId}`,
         waveColor: '#4a4a4a',
         progressColor: '#2b91af',
         cursorColor: '#ffffff',
@@ -665,90 +385,77 @@
         cursorWidth: 1,
         height: 100,
         barGap: 2,
-        responsive: true,
-        normalize: true,
-        backend: 'WebAudio',
-        interact: true
+        responsive: true
       });
       
-      // Configurar eventos
-      const playBtn = document.getElementById(`play-${playerId}`);
-      const muteBtn = document.getElementById(`mute-${playerId}`);
-      const volumeSlider = document.getElementById(`volume-${playerId}`);
-      const timeDisplay = document.getElementById(`time-${playerId}`);
+      wavesurfer.load(audioSrc);
       
-      // Cargar el archivo de audio
-      wavesurfers[playerId].load(audioSrc);
+      // Add controls
+      const controls = document.createElement('div');
+      controls.style.marginTop = '10px';
+      controls.style.display = 'flex';
+      controls.style.gap = '10px';
+      controls.style.alignItems = 'center';
       
-      // Manejar eventos de WaveSurfer
-      wavesurfers[playerId].on('ready', () => {
-        if (loadingElement) loadingElement.style.display = 'none';
-        if (errorElement) errorElement.style.display = 'none';
-        
-        // Actualizar el tiempo total
-        const duration = wavesurfers[playerId].getDuration();
-        timeDisplay.textContent = `0:00 / ${formatTime(duration)}`;
+      const playBtn = document.createElement('button');
+      playBtn.textContent = 'Play/Pause';
+      playBtn.onclick = () => wavesurfer.playPause();
+      
+      const stopBtn = document.createElement('button');
+      stopBtn.textContent = 'Stop';
+      stopBtn.onclick = () => {
+        wavesurfer.stop();
+        wavesurfer.seekTo(0);
+      };
+      
+      const volumeControl = document.createElement('input');
+      volumeControl.type = 'range';
+      volumeControl.min = '0';
+      volumeControl.max = '1';
+      volumeControl.step = '0.01';
+      volumeControl.value = '1';
+      volumeControl.oninput = (e) => wavesurfer.setVolume(e.target.value);
+      
+      controls.appendChild(playBtn);
+      controls.appendChild(stopBtn);
+      controls.appendChild(document.createTextNode('Vol:'));
+      controls.appendChild(volumeControl);
+      
+      container.appendChild(controls);
+      
+      // Update time display
+      wavesurfer.on('audioprocess', () => {
+        const currentTime = wavesurfer.getCurrentTime();
+        const duration = wavesurfer.getDuration();
+        audioDuration.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
       });
       
-      wavesurfers[playerId].on('error', (error) => {
-        if (loadingElement) loadingElement.style.display = 'none';
-        if (errorElement) {
-          errorElement.textContent = `Error al cargar el audio: ${error}`;
-          errorElement.style.display = 'block';
-        }
-        console.error(`Error en ${playerId}:`, error);
-      });
-      
-      wavesurfers[playerId].on('audioprocess', () => {
-        const currentTime = wavesurfers[playerId].getCurrentTime();
-        const duration = wavesurfers[playerId].getDuration();
-        timeDisplay.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
-      });
-      
-      wavesurfers[playerId].on('finish', () => {
-        if (playBtn) playBtn.textContent = 'Play';
-      });
-      
-      // Configurar controles
-      if (playBtn) {
-        playBtn.addEventListener('click', () => {
-          wavesurfers[playerId].playPause();
-          playBtn.textContent = wavesurfers[playerId].isPlaying() ? 'Pause' : 'Play';
-        });
-      }
-      
-      if (muteBtn) {
-        let isMuted = false;
-        muteBtn.addEventListener('click', () => {
-          isMuted = !isMuted;
-          wavesurfers[playerId].setMute(isMuted);
-          muteBtn.textContent = isMuted ? 'Unmute' : 'Mute';
-        });
-      }
-      
-      if (volumeSlider) {
-        volumeSlider.addEventListener('input', (e) => {
-          wavesurfers[playerId].setVolume(parseFloat(e.target.value));
-        });
+      // Format time as MM:SS
+      function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
       }
     }
     
-    // Inicializar reproductores cuando la página cargue
+    // Initialize audio players when the page loads
     document.addEventListener('DOMContentLoaded', () => {
-      // Reproductores para los impulsos
-      createAudioPlayer('impulse1', '../audios/impulsos/salarev_F1_P3.wav');
-      createAudioPlayer('impulse2', '../audios/impulsos/ed14K_F2_P2.wav');
-      createAudioPlayer('impulse3', '../audios/impulsos/ed6K_F2_P1.wav');
+      // Grabaciones secas
+      createAudioPlayer("voz-seca", "../audios/an_03_poem.wav", "Voz seca (sin reverberación)");
+      createAudioPlayer("instrumento-seco", "../audios/an_01_bot.wav", "Instrumento seco (sin reverberación)");
       
-      // Reproductores para audios secos
-      createAudioPlayer('dry-voice', '../audios/secos/an_03_poem.wav');
-      createAudioPlayer('dry-instrument1', '../audios/secos/an_01_bot.wav');
-      createAudioPlayer('dry-instrument2', '../audios/secos/an_02_bot.wav');
+      // Respuestas al impulso
+      createAudioPlayer("impulso-camara", "audios/ri-camara.wav", "Respuesta al impulso - Cámara Reverberante");
+      createAudioPlayer("impulso-14k", "audios/ri-14k.wav", "Respuesta al impulso - Edificio 14K");
+      createAudioPlayer("impulso-6k", "audios/ri-6k.wav", "Respuesta al impulso - Edificio 6K Pasillos");
       
-      // Reproductores para audios convolucionados
-      createAudioPlayer('convolved-voice-camara', '../audios/convolucionado/resultado_convolucion6kan_01.wav');
-      createAudioPlayer('convolved-instrument1-14k', '../audios/convolucionado/resultado_convolucion6kan_02_bot.wav');
-      createAudioPlayer('convolved-instrument2-6k', '../audios/convolucionado/resultado_convolucioned14K_F2_P2an_03_poem.wav');
+      // Audios convolucionados
+      createAudioPlayer("voz-camara", "audios/voz-conv-camara.wav", "Voz convolucionada - Cámara Reverberante");
+      createAudioPlayer("voz-14k", "audios/voz-conv-14k.wav", "Voz convolucionada - Edificio 14K");
+      createAudioPlayer("voz-6k", "audios/voz-conv-6k.wav", "Voz convolucionada - Edificio 6K Pasillos");
+      createAudioPlayer("instrumento-camara", "audios/instrumento-conv-camara.wav", "Instrumento convolucionado - Cámara Reverberante");
+      createAudioPlayer("instrumento-14k", "audios/instrumento-conv-14k.wav", "Instrumento convolucionado - Edificio 14K");
+      createAudioPlayer("instrumento-6k", "audios/instrumento-conv-6k.wav", "Instrumento convolucionado - Edificio 6K Pasillos");
     });
   </script>
 </body>
