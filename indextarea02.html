@@ -6,8 +6,10 @@
   <title>Respuesta al Impulso - Grupo UACh</title>
   <script src="https://unpkg.com/wavesurfer.js"></script>
   <style>
-    /* Estilos generales */
-    body {
+    /* [Tus estilos CSS existentes...] */
+  </style>
+</head>
+<body> {
       font-family: Arial, sans-serif;
       margin: 0;
       background-color: #212121;
@@ -421,15 +423,11 @@
   <script>
     // Función para cambiar entre secciones principales
     function showSection(sectionId) {
-      // Oculta todas las secciones
       document.querySelectorAll('.content-section').forEach(section => {
         section.classList.remove('active');
       });
-      
-      // Muestra la sección seleccionada
       document.getElementById(sectionId).classList.add('active');
       
-      // Actualiza el botón activo
       document.querySelectorAll('.nav-btn').forEach(btn => {
         btn.classList.remove('active');
       });
@@ -438,15 +436,12 @@
     
     // Función para cambiar entre pestañas de audio
     function showAudioTab(tabId) {
-      // Oculta todas las secciones de audio
       document.getElementById('impulse-section').style.display = 'none';
       document.getElementById('dry-section').style.display = 'none';
       document.getElementById('convolved-section').style.display = 'none';
       
-      // Muestra la sección seleccionada
       document.getElementById(tabId + '-section').style.display = 'block';
       
-      // Actualiza las pestañas activas
       document.querySelectorAll('.tab').forEach(tab => {
         tab.classList.remove('active');
       });
@@ -458,10 +453,8 @@
       const container = document.getElementById(containerId);
       if (!container) return;
       
-      // Limpiar el contenedor si ya tiene contenido
       container.innerHTML = '';
       
-      // Crear el elemento de onda
       const wavesurfer = WaveSurfer.create({
         container: `#${containerId}`,
         waveColor: '#4a4a4a',
@@ -475,14 +468,25 @@
         responsive: true
       });
       
-      // Cargar el audio
-      wavesurfer.load(audioSrc);
+      // Manejo de errores al cargar audio
+      wavesurfer.on('error', (error) => {
+        console.error('Error al cargar el audio:', error);
+        container.innerHTML = `<p style="color: #ff6b6b;">Error al cargar el audio: ${audioSrc}</p>`;
+      });
+      
+      // Intentar cargar el audio
+      try {
+        wavesurfer.load(audioSrc);
+      } catch (error) {
+        console.error('Error al cargar el audio:', error);
+        container.innerHTML = `<p style="color: #ff6b6b;">Error al cargar el audio: ${audioSrc}</p>`;
+        return;
+      }
       
       // Crear controles
       const controls = document.createElement('div');
       controls.className = 'wave-controls';
       
-      // Botón de play/pause
       const playBtn = document.createElement('button');
       playBtn.textContent = 'Play';
       playBtn.onclick = () => {
@@ -490,11 +494,9 @@
         playBtn.textContent = wavesurfer.isPlaying() ? 'Pause' : 'Play';
       };
       
-      // Mostrar tiempo
       const timeDisplay = document.createElement('div');
       timeDisplay.className = 'wave-time';
       
-      // Control de volumen
       const volumeControl = document.createElement('div');
       volumeControl.className = 'wave-volume';
       
@@ -518,7 +520,6 @@
       volumeControl.appendChild(volumeLabel);
       volumeControl.appendChild(volumeSlider);
       
-      // Botón de mute
       const muteBtn = document.createElement('button');
       muteBtn.textContent = 'Mute';
       let isMuted = false;
@@ -528,7 +529,6 @@
         muteBtn.textContent = isMuted ? 'Unmute' : 'Mute';
       };
       
-      // Añadir controles al contenedor
       controls.appendChild(playBtn);
       controls.appendChild(muteBtn);
       controls.appendChild(timeDisplay);
@@ -536,21 +536,18 @@
       
       container.appendChild(controls);
       
-      // Actualizar el tiempo
       wavesurfer.on('audioprocess', () => {
         const currentTime = wavesurfer.getCurrentTime();
         const duration = wavesurfer.getDuration();
         timeDisplay.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
       });
       
-      // Formatear tiempo como MM:SS
       function formatTime(seconds) {
         const minutes = Math.floor(seconds / 60);
         const secs = Math.floor(seconds % 60);
         return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
       }
       
-      // Cambiar texto del botón cuando termina la reproducción
       wavesurfer.on('finish', () => {
         playBtn.textContent = 'Play';
       });
@@ -558,20 +555,33 @@
     
     // Inicializar reproductores cuando la página cargue
     document.addEventListener('DOMContentLoaded', () => {
-      // Reproductores para los impulsos
-      createAudioPlayer("impulse1", "audios/impulsos/salarev_F1_P3.wav", "Impulso - Cámara Reverberante");
-      createAudioPlayer("impulse2", "audios/impulsos/ed14K_F2_P2.wav", "Impulso - Edificio 14K");
-      createAudioPlayer("impulse3", "audios/impulsos/ed6K_F2_P1.wav", "Impulso - Edificio 6K Pasillos");
+      // Verificar si Wavesurfer está cargado
+      if (typeof WaveSurfer === 'undefined') {
+        console.error('WaveSurfer no se cargó correctamente');
+        return;
+      }
       
-      // Reproductores para audios secos
-      createAudioPlayer("dry-voice", "audios/secos/an_03_poem.wav", "Voz Seca");
-      createAudioPlayer("dry-instrument1", "audios/secos/an_01_bot.wav", "Instrumento Seco 1");
-      createAudioPlayer("dry-instrument2", "audios/secos/an_02_bot.wav", "Instrumento Seco 2");
+      // Configuración de rutas de audio (ajusta según tu estructura de archivos)
+      const audioBasePath = 'audios/';
       
-      // Reproductores para audios convolucionados
-      createAudioPlayer("convolved-voice-camara", "audios/convolucionado/resultado_convolucion6kan_01.wav", "Voz en Cámara Reverberante");
-      createAudioPlayer("convolved-instrument1-14k", "audios/convolucionado/resultado_convolucion6kan_02_bot.wav", "Instrumento 1 en Edificio 14K");
-      createAudioPlayer("convolved-instrument2-6k", "audios/convolucionado/resultado_convolucioned14K_F2_P2an_03_poem.wav", "Instrumento 2 en Edificio 6K Pasillos");
+      // Reproductores para los impulsos con manejo de errores
+      try {
+        createAudioPlayer("impulse1", audioBasePath + "impulsos/salarev_F1_P3.wav", "Impulso - Cámara Reverberante");
+        createAudioPlayer("impulse2", audioBasePath + "impulsos/ed14K_F2_P2.wav", "Impulso - Edificio 14K");
+        createAudioPlayer("impulse3", audioBasePath + "impulsos/ed6K_F2_P1.wav", "Impulso - Edificio 6K Pasillos");
+        
+        // Reproductores para audios secos
+        createAudioPlayer("dry-voice", audioBasePath + "secos/an_03_poem.wav", "Voz Seca");
+        createAudioPlayer("dry-instrument1", audioBasePath + "secos/an_01_bot.wav", "Instrumento Seco 1");
+        createAudioPlayer("dry-instrument2", audioBasePath + "secos/an_02_bot.wav", "Instrumento Seco 2");
+        
+        // Reproductores para audios convolucionados
+        createAudioPlayer("convolved-voice-camara", audioBasePath + "convolucionado/resultado_convolucion6kan_01.wav", "Voz en Cámara Reverberante");
+        createAudioPlayer("convolved-instrument1-14k", audioBasePath + "convolucionado/resultado_convolucion6kan_02_bot.wav", "Instrumento 1 en Edificio 14K");
+        createAudioPlayer("convolved-instrument2-6k", audioBasePath + "convolucionado/resultado_convolucioned14K_F2_P2an_03_poem.wav", "Instrumento 2 en Edificio 6K Pasillos");
+      } catch (error) {
+        console.error('Error al inicializar reproductores:', error);
+      }
     });
   </script>
 </body>
