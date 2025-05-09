@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Respuesta al Impulso - Grupo UACh</title>
   <script src="https://unpkg.com/wavesurfer.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
   <style>
     /* Estilos generales */
     body {
@@ -170,6 +171,69 @@
     .audio-duration {
       color: #aaa;
     }
+
+    /* Estilos del reproductor mejorado */
+    .player-wrap {
+      width: 100%;
+      margin: 20px 0;
+    }
+
+    .audio-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .audio-controls button {
+      background: #444;
+      border: none;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .audio-controls button:hover {
+      background: #555;
+    }
+
+    .audio-controls button i {
+      font-size: 16px;
+    }
+
+    .audio-controls .btn-toggle-pause .fa-pause,
+    .audio-controls .btn-toggle-mute .fa-volume-up {
+      display: none;
+    }
+
+    .audio-controls .btn-toggle-pause.playing .fa-play {
+      display: none;
+    }
+
+    .audio-controls .btn-toggle-pause.playing .fa-pause {
+      display: inline-block;
+    }
+
+    .audio-controls .btn-toggle-mute.muted .fa-volume-off {
+      display: none;
+    }
+
+    .audio-controls .btn-toggle-mute.muted .fa-volume-up {
+      display: inline-block;
+    }
+
+    /* Volume slider */
+    .volume-slider {
+      width: 100px;
+      margin: 0 10px;
+    }
   </style>
 </head>
 <body>
@@ -257,12 +321,52 @@
       
       <div class="audio-group">
         <h3>Voz</h3>
-        <div id="voz-seca" class="player-container"></div>
+        <div class="player-wrap">
+          <div id="voz-seca-wave"></div>
+          <div class="audio-controls">
+            <button type="button" class="btn-backward">
+              <i class="fa fa-step-backward"></i>
+            </button>
+            <button type="button" class="btn-toggle-pause">
+              <i class="fa fa-play"></i> <i class="fa fa-pause"></i>
+            </button>
+            <button type="button" class="btn-forward">
+              <i class="fa fa-step-forward"></i>
+            </button>
+            <button type="button" class="btn-toggle-mute">
+              <i class="fa fa-volume-off"></i> <i class="fa fa-volume-up"></i>
+            </button>
+            <button type="button" class="btn-stop">
+              <i class="fa fa-stop"></i>
+            </button>
+            <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1">
+          </div>
+        </div>
       </div>
       
       <div class="audio-group">
         <h3>Instrumento</h3>
-        <div id="instrumento-seco" class="player-container"></div>
+        <div class="player-wrap">
+          <div id="instrumento-seco-wave"></div>
+          <div class="audio-controls">
+            <button type="button" class="btn-backward">
+              <i class="fa fa-step-backward"></i>
+            </button>
+            <button type="button" class="btn-toggle-pause">
+              <i class="fa fa-play"></i> <i class="fa fa-pause"></i>
+            </button>
+            <button type="button" class="btn-forward">
+              <i class="fa fa-step-forward"></i>
+            </button>
+            <button type="button" class="btn-toggle-mute">
+              <i class="fa fa-volume-off"></i> <i class="fa fa-volume-up"></i>
+            </button>
+            <button type="button" class="btn-stop">
+              <i class="fa fa-stop"></i>
+            </button>
+            <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1">
+          </div>
+        </div>
       </div>
     </section>
 
@@ -273,17 +377,77 @@
       
       <div class="audio-group">
         <h3>1. Cámara Reverberante</h3>
-        <div id="impulso-camara" class="player-container"></div>
+        <div class="player-wrap">
+          <div id="impulso-camara-wave"></div>
+          <div class="audio-controls">
+            <button type="button" class="btn-backward">
+              <i class="fa fa-step-backward"></i>
+            </button>
+            <button type="button" class="btn-toggle-pause">
+              <i class="fa fa-play"></i> <i class="fa fa-pause"></i>
+            </button>
+            <button type="button" class="btn-forward">
+              <i class="fa fa-step-forward"></i>
+            </button>
+            <button type="button" class="btn-toggle-mute">
+              <i class="fa fa-volume-off"></i> <i class="fa fa-volume-up"></i>
+            </button>
+            <button type="button" class="btn-stop">
+              <i class="fa fa-stop"></i>
+            </button>
+            <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1">
+          </div>
+        </div>
       </div>
       
       <div class="audio-group">
         <h3>2. Edificio 14K</h3>
-        <div id="impulso-14k" class="player-container"></div>
+        <div class="player-wrap">
+          <div id="impulso-14k-wave"></div>
+          <div class="audio-controls">
+            <button type="button" class="btn-backward">
+              <i class="fa fa-step-backward"></i>
+            </button>
+            <button type="button" class="btn-toggle-pause">
+              <i class="fa fa-play"></i> <i class="fa fa-pause"></i>
+            </button>
+            <button type="button" class="btn-forward">
+              <i class="fa fa-step-forward"></i>
+            </button>
+            <button type="button" class="btn-toggle-mute">
+              <i class="fa fa-volume-off"></i> <i class="fa fa-volume-up"></i>
+            </button>
+            <button type="button" class="btn-stop">
+              <i class="fa fa-stop"></i>
+            </button>
+            <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1">
+          </div>
+        </div>
       </div>
       
       <div class="audio-group">
         <h3>3. Edificio 6K Pasillos</h3>
-        <div id="impulso-6k" class="player-container"></div>
+        <div class="player-wrap">
+          <div id="impulso-6k-wave"></div>
+          <div class="audio-controls">
+            <button type="button" class="btn-backward">
+              <i class="fa fa-step-backward"></i>
+            </button>
+            <button type="button" class="btn-toggle-pause">
+              <i class="fa fa-play"></i> <i class="fa fa-pause"></i>
+            </button>
+            <button type="button" class="btn-forward">
+              <i class="fa fa-step-forward"></i>
+            </button>
+            <button type="button" class="btn-toggle-mute">
+              <i class="fa fa-volume-off"></i> <i class="fa fa-volume-up"></i>
+            </button>
+            <button type="button" class="btn-stop">
+              <i class="fa fa-stop"></i>
+            </button>
+            <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1">
+          </div>
+        </div>
       </div>
     </section>
 
@@ -294,169 +458,10 @@
       
       <div class="audio-group">
         <h3>Voz en Cámara Reverberante</h3>
-        <div id="voz-camara" class="player-container"></div>
-      </div>
-      
-      <div class="audio-group">
-        <h3>Voz en Edificio 14K</h3>
-        <div id="voz-14k" class="player-container"></div>
-      </div>
-      
-      <div class="audio-group">
-        <h3>Voz en Edificio 6K Pasillos</h3>
-        <div id="voz-6k" class="player-container"></div>
-      </div>
-      
-      <div class="audio-group">
-        <h3>Instrumento en Cámara Reverberante</h3>
-        <div id="instrumento-camara" class="player-container"></div>
-      </div>
-      
-      <div class="audio-group">
-        <h3>Instrumento en Edificio 14K</h3>
-        <div id="instrumento-14k" class="player-container"></div>
-      </div>
-      
-      <div class="audio-group">
-        <h3>Instrumento en Edificio 6K Pasillos</h3>
-        <div id="instrumento-6k" class="player-container"></div>
-      </div>
-    </section>
-
-    <!-- Sección Galería -->
-    <section id="galeria" class="content-section">
-      <h2>📸 Galería Fotográfica</h2>
-      <p>Aquí irían las fotos del proyecto cuando estén disponibles.</p>
-    </section>
-  </div>
-
-  <footer>
-    <p>UACh - Escuela de Acústica | Proyecto de Medición ISO 3382</p>
-  </footer>
-
-  <script>
-    function showSection(sectionId) {
-      // Oculta todas las secciones
-      document.querySelectorAll('.content-section').forEach(section => {
-        section.classList.remove('active');
-      });
-      
-      // Muestra la sección seleccionada
-      document.getElementById(sectionId).classList.add('active');
-      
-      // Actualiza el botón activo
-      document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.classList.remove('active');
-      });
-      event.target.classList.add('active');
-    }
-    
-    function createAudioPlayer(containerId, audioSrc, title) {
-      const container = document.getElementById(containerId);
-      if (!container) return;
-      
-      // Limpiar el contenedor si ya tiene contenido
-      container.innerHTML = '';
-      
-      // Crear elemento de información del audio
-      const audioInfo = document.createElement('div');
-      audioInfo.className = 'audio-info';
-      
-      const audioTitle = document.createElement('div');
-      audioTitle.className = 'audio-title';
-      audioTitle.textContent = title || 'Audio';
-      
-      const audioDuration = document.createElement('div');
-      audioDuration.className = 'audio-duration';
-      audioDuration.textContent = '0:00 / 0:00';
-      
-      audioInfo.appendChild(audioTitle);
-      audioInfo.appendChild(audioDuration);
-      container.appendChild(audioInfo);
-      
-      // Crear el visualizador de onda
-      const wavesurfer = WaveSurfer.create({
-        container: `#${containerId}`,
-        waveColor: '#4a4a4a',
-        progressColor: '#2b91af',
-        cursorColor: '#ffffff',
-        barWidth: 2,
-        barRadius: 3,
-        cursorWidth: 1,
-        height: 100,
-        barGap: 2,
-        responsive: true
-      });
-      
-      wavesurfer.load(audioSrc);
-      
-      // Add controls
-      const controls = document.createElement('div');
-      controls.style.marginTop = '10px';
-      controls.style.display = 'flex';
-      controls.style.gap = '10px';
-      controls.style.alignItems = 'center';
-      
-      const playBtn = document.createElement('button');
-      playBtn.textContent = 'Play/Pause';
-      playBtn.onclick = () => wavesurfer.playPause();
-      
-      const stopBtn = document.createElement('button');
-      stopBtn.textContent = 'Stop';
-      stopBtn.onclick = () => {
-        wavesurfer.stop();
-        wavesurfer.seekTo(0);
-      };
-      
-      const volumeControl = document.createElement('input');
-      volumeControl.type = 'range';
-      volumeControl.min = '0';
-      volumeControl.max = '1';
-      volumeControl.step = '0.01';
-      volumeControl.value = '1';
-      volumeControl.oninput = (e) => wavesurfer.setVolume(e.target.value);
-      
-      controls.appendChild(playBtn);
-      controls.appendChild(stopBtn);
-      controls.appendChild(document.createTextNode('Vol:'));
-      controls.appendChild(volumeControl);
-      
-      container.appendChild(controls);
-      
-      // Update time display
-      wavesurfer.on('audioprocess', () => {
-        const currentTime = wavesurfer.getCurrentTime();
-        const duration = wavesurfer.getDuration();
-        audioDuration.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
-      });
-      
-      // Format time as MM:SS
-      function formatTime(seconds) {
-        const minutes = Math.floor(seconds / 60);
-        const secs = Math.floor(seconds % 60);
-        return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
-      }
-    }
-    
-    // Initialize audio players when the page loads
-    document.addEventListener('DOMContentLoaded', () => {
-      // Grabaciones secas
-      createAudioPlayer("voz-seca", ".C:/Users/skate/Desktop/TAREA_02_ REPOSITORIO/audios/secos/an_03_poem.wav", "Voz seca (sin reverberación)");
-      createAudioPlayer("instrumento-seco", "../audios/an_01_bot.wav", "Instrumento seco (sin reverberación)");
-      
-      // Respuestas al impulso
-      createAudioPlayer("impulso-camara", "audios/ri-camara.wav", "Respuesta al impulso - Cámara Reverberante");
-      createAudioPlayer("impulso-14k", "audios/ri-14k.wav", "Respuesta al impulso - Edificio 14K");
-      createAudioPlayer("impulso-6k", "audios/ri-6k.wav", "Respuesta al impulso - Edificio 6K Pasillos");
-      
-      // Audios convolucionados
-      createAudioPlayer("voz-camara", "audios/voz-conv-camara.wav", "Voz convolucionada - Cámara Reverberante");
-      createAudioPlayer("voz-14k", "audios/voz-conv-14k.wav", "Voz convolucionada - Edificio 14K");
-      createAudioPlayer("voz-6k", "audios/voz-conv-6k.wav", "Voz convolucionada - Edificio 6K Pasillos");
-      createAudioPlayer("instrumento-camara", "audios/instrumento-conv-camara.wav", "Instrumento convolucionado - Cámara Reverberante");
-      createAudioPlayer("instrumento-14k", "audios/instrumento-conv-14k.wav", "Instrumento convolucionado - Edificio 14K");
-      createAudioPlayer("instrumento-6k", "audios/instrumento-conv-6k.wav", "Instrumento convolucionado - Edificio 6K Pasillos");
-    });
-  </script>
-</body>
-</html>
+        <div class="player-wrap">
+          <div id="voz-camara-wave"></div>
+          <div class="audio-controls">
+            <button type="button" class="btn-backward">
+              <i class="fa fa-step-backward"></i>
+            </button>
+            <button
