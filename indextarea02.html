@@ -6,10 +6,8 @@
   <title>Respuesta al Impulso - Grupo UACh</title>
   <script src="https://unpkg.com/wavesurfer.js"></script>
   <style>
-    /* [Tus estilos CSS existentes...] */
-  </style>
-</head>
-<body> {
+    /* Estilos generales */
+    body {
       font-family: Arial, sans-serif;
       margin: 0;
       background-color: #212121;
@@ -226,6 +224,15 @@
       background: #2b91af;
       font-weight: bold;
     }
+
+    /* Estilos para mensajes de error */
+    .error-message {
+      color: #ff6b6b;
+      padding: 10px;
+      background: rgba(255, 107, 107, 0.1);
+      border-radius: 4px;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -423,11 +430,15 @@
   <script>
     // Función para cambiar entre secciones principales
     function showSection(sectionId) {
+      // Oculta todas las secciones
       document.querySelectorAll('.content-section').forEach(section => {
         section.classList.remove('active');
       });
+      
+      // Muestra la sección seleccionada
       document.getElementById(sectionId).classList.add('active');
       
+      // Actualiza el botón activo
       document.querySelectorAll('.nav-btn').forEach(btn => {
         btn.classList.remove('active');
       });
@@ -436,136 +447,169 @@
     
     // Función para cambiar entre pestañas de audio
     function showAudioTab(tabId) {
+      // Oculta todas las secciones de audio
       document.getElementById('impulse-section').style.display = 'none';
       document.getElementById('dry-section').style.display = 'none';
       document.getElementById('convolved-section').style.display = 'none';
       
+      // Muestra la sección seleccionada
       document.getElementById(tabId + '-section').style.display = 'block';
       
+      // Actualiza las pestañas activas
       document.querySelectorAll('.tab').forEach(tab => {
         tab.classList.remove('active');
       });
       event.target.classList.add('active');
     }
     
-    // Función para crear reproductores de audio
+    // Función para crear reproductores de audio con manejo de errores
     function createAudioPlayer(containerId, audioSrc, title) {
       const container = document.getElementById(containerId);
-      if (!container) return;
-      
-      container.innerHTML = '';
-      
-      const wavesurfer = WaveSurfer.create({
-        container: `#${containerId}`,
-        waveColor: '#4a4a4a',
-        progressColor: '#2b91af',
-        cursorColor: '#ffffff',
-        barWidth: 2,
-        barRadius: 3,
-        cursorWidth: 1,
-        height: 100,
-        barGap: 2,
-        responsive: true
-      });
-      
-      // Manejo de errores al cargar audio
-      wavesurfer.on('error', (error) => {
-        console.error('Error al cargar el audio:', error);
-        container.innerHTML = `<p style="color: #ff6b6b;">Error al cargar el audio: ${audioSrc}</p>`;
-      });
-      
-      // Intentar cargar el audio
-      try {
-        wavesurfer.load(audioSrc);
-      } catch (error) {
-        console.error('Error al cargar el audio:', error);
-        container.innerHTML = `<p style="color: #ff6b6b;">Error al cargar el audio: ${audioSrc}</p>`;
+      if (!container) {
+        console.error(`Contenedor ${containerId} no encontrado`);
         return;
       }
       
-      // Crear controles
-      const controls = document.createElement('div');
-      controls.className = 'wave-controls';
+      // Limpiar el contenedor
+      container.innerHTML = '';
       
-      const playBtn = document.createElement('button');
-      playBtn.textContent = 'Play';
-      playBtn.onclick = () => {
-        wavesurfer.playPause();
-        playBtn.textContent = wavesurfer.isPlaying() ? 'Pause' : 'Play';
-      };
-      
-      const timeDisplay = document.createElement('div');
-      timeDisplay.className = 'wave-time';
-      
-      const volumeControl = document.createElement('div');
-      volumeControl.className = 'wave-volume';
-      
-      const volumeLabel = document.createElement('span');
-      volumeLabel.textContent = 'Vol:';
-      
-      const volumeSlider = document.createElement('input');
-      volumeSlider.type = 'range';
-      volumeSlider.min = '0';
-      volumeSlider.max = '1';
-      volumeSlider.step = '0.01';
-      volumeSlider.value = '1';
-      volumeSlider.oninput = (e) => {
-        wavesurfer.setVolume(e.target.value);
-        if (isMuted) {
-          isMuted = false;
-          muteBtn.textContent = 'Mute';
-        }
-      };
-      
-      volumeControl.appendChild(volumeLabel);
-      volumeControl.appendChild(volumeSlider);
-      
-      const muteBtn = document.createElement('button');
-      muteBtn.textContent = 'Mute';
-      let isMuted = false;
-      muteBtn.onclick = () => {
-        isMuted = !isMuted;
-        wavesurfer.setVolume(isMuted ? 0 : volumeSlider.value);
-        muteBtn.textContent = isMuted ? 'Unmute' : 'Mute';
-      };
-      
-      controls.appendChild(playBtn);
-      controls.appendChild(muteBtn);
-      controls.appendChild(timeDisplay);
-      controls.appendChild(volumeControl);
-      
-      container.appendChild(controls);
-      
-      wavesurfer.on('audioprocess', () => {
-        const currentTime = wavesurfer.getCurrentTime();
-        const duration = wavesurfer.getDuration();
-        timeDisplay.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
-      });
-      
-      function formatTime(seconds) {
-        const minutes = Math.floor(seconds / 60);
-        const secs = Math.floor(seconds % 60);
-        return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+      // Verificar si WaveSurfer está disponible
+      if (typeof WaveSurfer === 'undefined') {
+        container.innerHTML = `
+          <div class="error-message">
+            Error: La biblioteca WaveSurfer no se cargó correctamente.
+          </div>
+          <audio controls src="${audioSrc}" style="width:100%; margin-top:10px;"></audio>
+        `;
+        return;
       }
       
-      wavesurfer.on('finish', () => {
+      try {
+        // Crear el elemento de onda
+        const wavesurfer = WaveSurfer.create({
+          container: `#${containerId}`,
+          waveColor: '#4a4a4a',
+          progressColor: '#2b91af',
+          cursorColor: '#ffffff',
+          barWidth: 2,
+          barRadius: 3,
+          cursorWidth: 1,
+          height: 100,
+          barGap: 2,
+          responsive: true
+        });
+        
+        // Manejar errores de carga
+        wavesurfer.on('error', (error) => {
+          console.error('Error al cargar el audio:', error);
+          container.innerHTML = `
+            <div class="error-message">
+              Error al cargar el audio: ${audioSrc}
+            </div>
+            <audio controls src="${audioSrc}" style="width:100%; margin-top:10px;"></audio>
+          `;
+        });
+        
+        // Cargar el audio
+        wavesurfer.load(audioSrc);
+        
+        // Crear controles
+        const controls = document.createElement('div');
+        controls.className = 'wave-controls';
+        
+        // Botón de play/pause
+        const playBtn = document.createElement('button');
         playBtn.textContent = 'Play';
-      });
+        playBtn.onclick = () => {
+          wavesurfer.playPause();
+          playBtn.textContent = wavesurfer.isPlaying() ? 'Pause' : 'Play';
+        };
+        
+        // Mostrar tiempo
+        const timeDisplay = document.createElement('div');
+        timeDisplay.className = 'wave-time';
+        timeDisplay.textContent = '0:00 / 0:00';
+        
+        // Control de volumen
+        const volumeControl = document.createElement('div');
+        volumeControl.className = 'wave-volume';
+        
+        const volumeLabel = document.createElement('span');
+        volumeLabel.textContent = 'Vol:';
+        
+        const volumeSlider = document.createElement('input');
+        volumeSlider.type = 'range';
+        volumeSlider.min = '0';
+        volumeSlider.max = '1';
+        volumeSlider.step = '0.01';
+        volumeSlider.value = '1';
+        let isMuted = false;
+        
+        volumeSlider.oninput = (e) => {
+          wavesurfer.setVolume(e.target.value);
+          if (isMuted) {
+            isMuted = false;
+            muteBtn.textContent = 'Mute';
+          }
+        };
+        
+        volumeControl.appendChild(volumeLabel);
+        volumeControl.appendChild(volumeSlider);
+        
+        // Botón de mute
+        const muteBtn = document.createElement('button');
+        muteBtn.textContent = 'Mute';
+        muteBtn.onclick = () => {
+          isMuted = !isMuted;
+          wavesurfer.setVolume(isMuted ? 0 : volumeSlider.value);
+          muteBtn.textContent = isMuted ? 'Unmute' : 'Mute';
+        };
+        
+        // Añadir controles al contenedor
+        controls.appendChild(playBtn);
+        controls.appendChild(muteBtn);
+        controls.appendChild(timeDisplay);
+        controls.appendChild(volumeControl);
+        
+        container.appendChild(controls);
+        
+        // Actualizar el tiempo
+        wavesurfer.on('audioprocess', () => {
+          const currentTime = wavesurfer.getCurrentTime();
+          const duration = wavesurfer.getDuration();
+          timeDisplay.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
+        });
+        
+        // Cambiar texto del botón cuando termina la reproducción
+        wavesurfer.on('finish', () => {
+          playBtn.textContent = 'Play';
+        });
+        
+      } catch (error) {
+        console.error('Error al crear el reproductor:', error);
+        container.innerHTML = `
+          <div class="error-message">
+            Error al crear el reproductor para: ${audioSrc}
+          </div>
+          <audio controls src="${audioSrc}" style="width:100%; margin-top:10px;"></audio>
+        `;
+      }
+    }
+    
+    // Formatear tiempo como MM:SS
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
     }
     
     // Inicializar reproductores cuando la página cargue
     document.addEventListener('DOMContentLoaded', () => {
-      // Verificar si Wavesurfer está cargado
-      if (typeof WaveSurfer === 'undefined') {
-        console.error('WaveSurfer no se cargó correctamente');
-        return;
-      }
-      
-      // Configuración de rutas de audio (ajusta según tu estructura de archivos)
+      // Configuración de rutas base
       const audioBasePath = 'audios/';
       
-      // Reproductores para los impulsos con manejo de errores
       try {
+        // Reproductores para los impulsos
         createAudioPlayer("impulse1", audioBasePath + "impulsos/salarev_F1_P3.wav", "Impulso - Cámara Reverberante");
         createAudioPlayer("impulse2", audioBasePath + "impulsos/ed14K_F2_P2.wav", "Impulso - Edificio 14K");
         createAudioPlayer("impulse3", audioBasePath + "impulsos/ed6K_F2_P1.wav", "Impulso - Edificio 6K Pasillos");
@@ -579,8 +623,14 @@
         createAudioPlayer("convolved-voice-camara", audioBasePath + "convolucionado/resultado_convolucion6kan_01.wav", "Voz en Cámara Reverberante");
         createAudioPlayer("convolved-instrument1-14k", audioBasePath + "convolucionado/resultado_convolucion6kan_02_bot.wav", "Instrumento 1 en Edificio 14K");
         createAudioPlayer("convolved-instrument2-6k", audioBasePath + "convolucionado/resultado_convolucioned14K_F2_P2an_03_poem.wav", "Instrumento 2 en Edificio 6K Pasillos");
+        
       } catch (error) {
-        console.error('Error al inicializar reproductores:', error);
+        console.error('Error al inicializar los reproductores:', error);
+        // Mostrar mensaje de error general si falla la inicialización
+        const errorContainer = document.createElement('div');
+        errorContainer.className = 'error-message';
+        errorContainer.textContent = 'Error al cargar los reproductores de audio. Por favor recarga la página.';
+        document.getElementById('audioPlayers').prepend(errorContainer);
       }
     });
   </script>
