@@ -559,19 +559,19 @@
     // Inicializar reproductores cuando la página cargue
     document.addEventListener('DOMContentLoaded', () => {
       // Reproductores para los impulsos
-      createAudioPlayer("impulse1", "audios/impulsos/ri-camara.wav", "Impulso - Cámara Reverberante");
-      createAudioPlayer("impulse2", "audios/impulsos/ri-14k.wav", "Impulso - Edificio 14K");
-      createAudioPlayer("impulse3", "audios/impulsos/ri-6k.wav", "Impulso - Edificio 6K Pasillos");
+      createAudioPlayer("impulse1", "audios/impulsos/salarev_F1_P3.wav", "Impulso - Cámara Reverberante");
+      createAudioPlayer("impulse2", "audios/impulsos/ed14K_F2_P2.wav", "Impulso - Edificio 14K");
+      createAudioPlayer("impulse3", "audios/impulsos/ed6K_F2_P1", "Impulso - Edificio 6K Pasillos");
       
       // Reproductores para audios secos
-      createAudioPlayer("dry-voice", "audios/secos/voz-seca.wav", "Voz Seca");
-      createAudioPlayer("dry-instrument1", "audios/secos/instrumento1-seco.wav", "Instrumento Seco 1");
-      createAudioPlayer("dry-instrument2", "audios/secos/instrumento2-seco.wav", "Instrumento Seco 2");
+      createAudioPlayer("dry-voice", "audios/secos/an_03_poem.wav", "Voz Seca");
+      createAudioPlayer("dry-instrument1", "audios/secos/an_01_bot.wav", "Instrumento Seco 1");
+      createAudioPlayer("dry-instrument2", "audios/secos/an_02_bot.wav", "Instrumento Seco 2");
       
       // Reproductores para audios convolucionados
-      createAudioPlayer("convolved-voice-camara", "audios/convolucionados/voz-conv-camara.wav", "Voz en Cámara Reverberante");
-      createAudioPlayer("convolved-instrument1-14k", "audios/convolucionados/instrumento1-conv-14k.wav", "Instrumento 1 en Edificio 14K");
-      createAudioPlayer("convolved-instrument2-6k", "audios/convolucionados/instrumento2-conv-6k.wav", "Instrumento 2 en Edificio 6K Pasillos");
+      createAudioPlayer("convolved-voice-camara", "audios/convolucionado/resultado_convolucion6kan_01.wav", "Voz en Cámara Reverberante");
+      createAudioPlayer("convolved-instrument1-14k", "audios/convolucionado/resultado_convolucion6kan_02_bot.wav", "Instrumento 1 en Edificio 14K");
+      createAudioPlayer("convolved-instrument2-6k", "audios/convolucionado/resultado_convolucioned14K_F2_P2an_03_poem.wav", "Instrumento 2 en Edificio 6K Pasillos");
     });
   </script>
 </body>
