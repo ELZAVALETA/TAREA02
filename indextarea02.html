@@ -1,3 +1,4 @@
+ HEAD
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -154,3 +155,161 @@
   </script>
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TAREA02 - Proyecto Acústica UACh</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #212121; color: #f0f0f0; display: flex; min-height: 100vh; flex-direction: column; }
+    .sidebar { width: 220px; background: #171717; padding: 20px; position: fixed; height: 100vh; overflow-y: auto; }
+    .sidebar-header { text-align: center; margin-bottom: 15px; }
+    .sidebar-logo { max-width: 100px; margin-bottom: 10px; }
+    .sidebar-title { font-size: 1.2rem; }
+    .sidebar-subtitle { font-size: 0.8rem; color: #aaa; margin-bottom: 15px; }
+    .sidebar-divider { border-bottom: 1px solid rgba(255,255,255,0.2); margin: 15px 0; }
+    .nav-btn { width: 100%; padding: 10px; margin: 5px 0; background: #282828; border: none; border-radius: 4px; color: #f0f0f0; text-align: left; cursor: pointer; }
+    .nav-btn.active { background: #2b91af; }
+    .main-content { margin-left: 240px; padding: 20px; flex: 1; }
+    .content-section { display: none; background: #2a2a2a; padding: 20px; margin-bottom: 30px; border-radius: 8px; }
+    .content-section.active { display: block; }
+    h2 { border-bottom: 2px solid #444; padding-bottom: 5px; }
+    .player-container { margin: 20px 0; padding: 15px; background: #333; border-radius: 5px; }
+    .audio-info { display: flex; justify-content: space-between; margin-bottom: 10px; }
+    .audio-title { font-weight: bold; }
+    .audio-duration { color: #aaa; }
+    .controls { display: flex; gap: 10px; margin-top: 10px; }
+    .controls button { background: #444; border: none; padding: 8px; border-radius: 4px; cursor: pointer; color: #f0f0f0; }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <img src="imagenes/logo-au.png" alt="Logo UACh" class="sidebar-logo">
+      <div class="sidebar-title">TAREA 02</div>
+      <div class="sidebar-subtitle">ACUS099</div>
+    </div>
+    <div class="sidebar-divider"></div>
+    <button class="nav-btn active" onclick="showSection('inicio', this)">🏠 Inicio</button>
+    <button class="nav-btn" onclick="showSection('integrantes', this)">👥 Integrantes</button>
+    <button class="nav-btn" onclick="showSection('equipamiento', this)">🛠️ Equipamiento</button>
+    <button class="nav-btn" onclick="showSection('recintos', this)">📍 Recintos Medidos</button>
+    <button class="nav-btn" onclick="showSection('grabaciones', this)">🎙️ Grabaciones Secas</button>
+    <button class="nav-btn" onclick="showSection('impulsos', this)">🔊 Respuestas al Impulso</button>
+    <button class="nav-btn" onclick="showSection('convolucion', this)">🔁 Audios Convolucionados</button>
+    <button class="nav-btn" onclick="showSection('galeria', this)">📸 Galería</button>
+  </div>
+
+  <div class="main-content">
+    <section id="inicio" class="content-section active">
+      <h1>Captura y Procesamiento de Respuesta al Impulso</h1>
+      <p>Proyecto Acústica UACh - Grupo X</p>
+    </section>
+
+    <section id="integrantes" class="content-section">
+      <h2>👥 Integrantes del Grupo</h2>
+      <ul><li>Nombre 1</li><li>Nombre 2</li><li>Nombre 3</li></ul>
+    </section>
+
+    <section id="equipamiento" class="content-section">
+      <h2>🛠️ Equipamiento Utilizado</h2>
+      <!-- Contenido de equipamiento aquí -->
+    </section>
+
+    <section id="recintos" class="content-section">
+      <h2>📍 Recintos Medidos</h2>
+      <!-- Descripciones de recintos aquí -->
+    </section>
+
+    <section id="grabaciones" class="content-section">
+      <h2>🎙️ Grabaciones Secas</h2>
+      <div id="voz-seca" class="player-container"></div>
+      <div id="instrumento-seco" class="player-container"></div>
+    </section>
+
+    <section id="impulsos" class="content-section">
+      <h2>🔊 Respuestas al Impulso</h2>
+      <div id="impulso-camara" class="player-container"></div>
+      <div id="impulso-14k" class="player-container"></div>
+      <div id="impulso-6k" class="player-container"></div>
+    </section>
+
+    <section id="convolucion" class="content-section">
+      <h2>🔁 Audios Convolucionados</h2>
+      <div id="voz-camara" class="player-container"></div>
+      <div id="instrumento-14k" class="player-container"></div>
+      <div id="instrumento-6k" class="player-container"></div>
+    </section>
+
+    <section id="galeria" class="content-section">
+      <h2>📸 Galería Fotográfica</h2>
+      <p>Fotos próximamente...</p>
+    </section>
+  </div>
+
+  <footer>UACh - Escuela de Acústica | Proyecto ISO 3382</footer>
+
+  <script src="https://unpkg.com/wavesurfer.js"></script>
+  <script>
+    function showSection(id, btn) {
+      document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    function createAudioPlayer(id, src, title) {
+      const container = document.getElementById(id);
+      container.innerHTML = '';
+      const info = document.createElement('div'); info.className = 'audio-info';
+      const t = document.createElement('div'); t.className = 'audio-title'; t.textContent = title;
+      const d = document.createElement('div'); d.className = 'audio-duration'; d.textContent = '00:00 / 00:00';
+      info.append(t, d); container.append(info);
+
+      const ws = WaveSurfer.create({
+        container: `#${id}`,
+        waveColor: '#4a4a4a', progressColor: '#2b91af', cursorColor: '#fff',
+        barWidth: 2, barRadius: 3, cursorWidth: 1, height: 80, barGap: 2, responsive: true
+      });
+      ws.load(src);
+
+      const ctrls = document.createElement('div'); ctrls.className = 'controls';
+      const buttons = [
+        { icon: 'fa-step-backward', action: () => ws.skip(-5) },
+        { icon: 'fa-play', action: () => ws.playPause() },
+        { icon: 'fa-step-forward', action: () => ws.skip(5) },
+        { icon: 'fa-volume-off', action: () => ws.toggleMute() },
+        { icon: 'fa-stop', action: () => { ws.stop(); ws.seekTo(0); } }
+      ];
+      buttons.forEach(b => {
+        const btn = document.createElement('button');
+        btn.innerHTML = `<i class="fa ${b.icon}"></i>`;
+        btn.onclick = b.action;
+        ctrls.append(btn);
+      });
+      container.append(ctrls);
+
+      ws.on('audioprocess', () => {
+        const cur = Math.floor(ws.getCurrentTime());
+        const dur = Math.floor(ws.getDuration());
+        d.textContent = `${String(Math.floor(cur/60)).padStart(2,'0')}:${String(cur%60).padStart(2,'0')} / ${String(Math.floor(dur/60)).padStart(2,'0')}:${String(dur%60).padStart(2,'0')}`;
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      createAudioPlayer('voz-seca', 'audios/secos/an_03_poem.wav', 'Voz Seca');
+      createAudioPlayer('instrumento-seco', 'audios/secos/an_01_bot.wav', 'Instrumento Seco');
+      createAudioPlayer('impulso-camara', 'audios/impulsos/salarev_F1_P3.wav', 'RI Cámara');
+      createAudioPlayer('impulso-14k', 'audios/impulsos/ed14K_F2_P2.wav', 'RI Edificio 14K');
+      createAudioPlayer('impulso-6k', 'audios/impulsos/ed6K_F2_P1.wav', 'RI Pasillos 6K');
+      createAudioPlayer('voz-camara', 'audios/convolucionado/resultado_convolucionreverb_03_poem.wav', 'Voz Convolucionada Cámara');
+      createAudioPlayer('instrumento-14k', 'audios/convolucionado/resultado_convolucioned14K_F2_P2an_02_bot.wav', 'Inst Conv 14K');
+      createAudioPlayer('instrumento-6k', 'audios/convolucionado/resultado_convolucion6kan_01.wav', 'Inst Conv 6K');
+    });
+  </script>
+</body>
+</html>
+8179f6460c1eb4fcd21e8f5e1913286ed84055d1
